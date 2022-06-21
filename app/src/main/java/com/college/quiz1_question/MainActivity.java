@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void countUp(View view) {
+        mCount +=1;
+        mShowCountTextView.setText(String.valueOf(mCount));
     }
 
     //TODO 2
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void reset(View view) {
+        mCount=0;
+        mShowCountTextView.setText(String.valueOf(mCount));
     }
 
     //TODO 3
@@ -86,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void savePrefs(View view) {
+        SharedPreferences.Editor edit=mPreferences.edit();
+        edit.putInt(COLOR_KEY,mColor);
+        edit.putInt(COUNT_KEY,mCount);
+        edit.commit();
     }
 
     //TODO 4
@@ -97,6 +105,16 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void restaurePrefs(View view) {
+        int color=mColor;//get current color
+        color = mPreferences.getInt(COLOR_KEY,mColor);//get saved prefs color
+        mShowCountTextView.setBackgroundColor(color);//set prefs color
+        mColor=color;//save new color
+
+        int count=mCount;
+        count=mPreferences.getInt(COUNT_KEY,mCount);
+        mShowCountTextView.setText(String.valueOf(count));
+        mCount=count;
+
     }
 
 }
